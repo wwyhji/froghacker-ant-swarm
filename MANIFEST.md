@@ -10,6 +10,7 @@
 | `ant_swarm/pheromone.py` | 信息素层（四种信息素 + CAS 抢占 + 方向位 + role 感知打分） | `tools/ccm/pheromone.py` |
 | `ant_swarm/protocol.py` | Worker 状态机 + 消息类型 + CCMError | `tools/ccm/protocol.py` |
 | `ant_swarm/worker_p2p.py` | Worker 直连（P2P 消息，基于信息素黑板） | `tools/ccm/worker_p2p.py` |
+| `ant_swarm/quality.py` | 跨 Worker 质量验证（交叉验证 + 冲突解决） | `tools/ccm/quality.py` |
 | `tests/` | test_pheromone + test_pheromone_stress | `tests/` |
 
 ## 二、改造说明（相对主仓库原版）

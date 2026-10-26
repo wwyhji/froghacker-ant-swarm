@@ -14,7 +14,7 @@
 
 ## 这是什么
 
-蛙客（FrogHacker）的 CCM（Claude Collaboration Manager）协作引擎采用**蚁群模型**做多 Agent 任务分配。本仓库开源其中的核心三件套：
+蛙客（FrogHacker）的 CCM（Claude Collaboration Manager）协作引擎采用**蚁群模型**做多 Agent 任务分配。本仓库开源其中的核心模块：
 
 > **多 Agent 任务分配不需要中心调度器。** 所有 Worker 读写同一块 SQLite 黑板，靠信息素做局部决策、自组织认领任务 —— 与蚁群觅食同构。
 
@@ -23,6 +23,7 @@
 | `pheromone.py` | 信息素层：四种信息素 + CAS 抢占 + **方向位**（通/不通） |
 | `protocol.py` | Worker 生命周期状态机 + 消息类型 |
 | `worker_p2p.py` | Worker 直连：点对点消息 / 求助广播 / 任务交接 |
+| `quality.py` | 跨 Worker 质量验证：交叉验证 / 冲突解决 / 答案完整性 |
 
 对比中心化编排（AutoGen GroupChatManager / CrewAI Manager）：无单点故障、天然并发、CAS 防重。
 
@@ -33,6 +34,7 @@
 - **信息素方向位** — `outcome ∈ {dead_end/failed/blocked}` 记 -1，避免「此路不通」被当正反馈
 - **role 感知打分** — role 提示的 recruit 只对匹配 role 的 Worker 开放（避免帮倒忙）
 - **Worker P2P** — 点对点消息 / 求助广播 / 任务交接，基于同一块信息素黑板，无需独立消息中间件
+- **跨 Worker 质量验证** — 双 Worker 交叉验证（summary 一致→verified，不一致→disputed 需第三 Worker 裁定），用冗余去幻觉
 - **零依赖** — 纯 Python 标准库（sqlite3 + threading + enum）
 
 ## 🚀 快速上手
@@ -99,7 +101,8 @@ froghacker-ant-swarm/
 │   ├── __init__.py
 │   ├── pheromone.py      信息素层
 │   ├── protocol.py       Worker 状态机
-│   └── worker_p2p.py     P2P 直连
+│   ├── worker_p2p.py     P2P 直连
+│   └── quality.py
 └── tests/                单元测试 + 压力测试
 ```
 
