@@ -6,6 +6,8 @@
   - protocol    Worker 状态机与消息类型
   - worker_p2p  Worker 直连（P2P 消息，基于信息素黑板）
   - quality     跨 Worker 质量验证（交叉验证 + 冲突解决）
+  - context     执行上下文交接（跨会话打包/解包）
+  - journal     事件日志 + 快照（三层兜底）
 
 核心主张：多 Agent 任务分配不需要中心调度器。所有 Worker 读写同一块
 SQLite 黑板，靠四种信息素做局部决策、自组织认领任务 —— 与蚁群觅食同构。
@@ -44,6 +46,8 @@ from .quality import (
     cross_verify,
     check_answer_completeness,
 )
+from .context import ContextPacket
+from .journal import EventJournal, EVENT_TYPES, SNAPSHOT_INTERVAL
 
 __all__ = [
     "Pheromone", "PheromoneDB", "score_tasks", "pick_best_task",
@@ -52,4 +56,5 @@ __all__ = [
     "WorkerState", "MessageType", "StateMachine", "CCMError",
     "WorkerP2P", "P2PMessage",
     "Verdict", "verify_finding", "cross_verify", "check_answer_completeness",
+    "ContextPacket", "EventJournal", "EVENT_TYPES", "SNAPSHOT_INTERVAL",
 ]

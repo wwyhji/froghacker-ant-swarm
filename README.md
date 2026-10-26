@@ -24,6 +24,8 @@
 | `protocol.py` | Worker 生命周期状态机 + 消息类型 |
 | `worker_p2p.py` | Worker 直连：点对点消息 / 求助广播 / 任务交接 |
 | `quality.py` | 跨 Worker 质量验证：交叉验证 / 冲突解决 / 答案完整性 |
+| `context.py` | 执行上下文交接：ContextPacket 跨会话打包/解包 |
+| `journal.py` | 事件日志 + 快照：EventJournal 追加式日志 / 自动快照 / 轮转 |
 
 对比中心化编排（AutoGen GroupChatManager / CrewAI Manager）：无单点故障、天然并发、CAS 防重。
 
@@ -35,6 +37,8 @@
 - **role 感知打分** — role 提示的 recruit 只对匹配 role 的 Worker 开放（避免帮倒忙）
 - **Worker P2P** — 点对点消息 / 求助广播 / 任务交接，基于同一块信息素黑板，无需独立消息中间件
 - **跨 Worker 质量验证** — 双 Worker 交叉验证（summary 一致→verified，不一致→disputed 需第三 Worker 裁定），用冗余去幻觉
+- **上下文交接** — ContextPacket 跨会话打包/解包，一个 Claude 打包、另一个解包续做
+- **事件日志** — EventJournal 追加式日志 + 自动快照 + 轮转，三层兜底（在线/离线/过期）
 - **零依赖** — 纯 Python 标准库（sqlite3 + threading + enum）
 
 ## 🚀 快速上手
@@ -102,7 +106,9 @@ froghacker-ant-swarm/
 │   ├── pheromone.py      信息素层
 │   ├── protocol.py       Worker 状态机
 │   ├── worker_p2p.py     P2P 直连
-│   └── quality.py
+│   ├── quality.py
+│   ├── context.py
+│   └── journal.py
 └── tests/                单元测试 + 压力测试
 ```
 
