@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+*.pyo
+.ant_swarm/
+*.db
+*.db-wal
+*.db-shm
