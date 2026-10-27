@@ -29,6 +29,18 @@
 
 对比中心化编排（AutoGen GroupChatManager / CrewAI Manager）：无单点故障、天然并发、CAS 防重。
 
+## 🗺️ 蛙客开源仓库导航
+
+蛙客平台按能力拆为五个独立仓库，本仓库是其中的**蚁群协作调度底座**：
+
+| 仓库 | 定位 |
+|------|------|
+| [froghacker-defense](https://github.com/wwyhji/froghacker-defense) | 防御端（蓝队）：检测规则 / 蜜罐 / IDS / 防火墙 / 加固 |
+| [froghacker-reveng](https://github.com/wwyhji/froghacker-reveng) | 逆向关联追踪引擎：APK 逆向找 key |
+| **[froghacker-ant-swarm](https://github.com/wwyhji/froghacker-ant-swarm)** | 蚁群协作调度底座：多 Agent 任务分配（本仓库） |
+| [froghacker-antihallucination](https://github.com/wwyhji/froghacker-antihallucination) | 算法抗幻觉：确定性验证 + 事实断言裁决 |
+| [froghacker-audit](https://github.com/wwyhji/froghacker-audit) | 代码静态安全审计：regex + AST 污点 |
+
 ## ✨ 特性
 
 - **四种信息素** — trail（我解过）/ alarm（卡住了）/ recruit（急招人）/ territory（我正在做）
